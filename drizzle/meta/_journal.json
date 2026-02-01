@@ -1,0 +1,27 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1761423676662,
+      "tag": "0000_black_speed",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1761513648353,
+      "tag": "0001_broad_metal_master",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1761946969434,
+      "tag": "0002_clumsy_james_howlett",
+      "breakpoints": true
+    }
+  ]
+}
