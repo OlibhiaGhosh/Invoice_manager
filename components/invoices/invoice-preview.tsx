@@ -1,5 +1,4 @@
 "use client";
-
 // import { Button } from "@/components/ui/button"
 // import { Card, CardContent } from "@/components/ui/card"
 // import Image from "next/image"
@@ -118,26 +117,59 @@
 // }
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { PDFViewer } from "@react-pdf/renderer";
+import { PDFViewer, PDFDownloadLink } from "@react-pdf/renderer";
 import InvoicePDF from "./InvoicePDF";
+const invoice = {
+  id: "INV-00126",
+  date: "2025-08-26",
+  clientName: "Acme Co.",
+  clientEmail: "contact@acme.com",
+  companyLogo: "",
+  items: [
+    { name: "Design work", quantity: 5, amount: 400.0 },
+    { name: "Landing page implementation", quantity: 6, amount: 600.0 },
+  ],
+  totalAmount: 1000.0034,
+  notes: "Payment by bank transfer within 15 days. Thank you!",
+};
 export const InvoicePreview = () => {
   return (
-  <PDFViewer>
-    <InvoicePDF invoice={{
-      id: "INV-00126",
-      date: "2025-08-26",
-      clientName: "Acme Co.",
-      clientEmail: "contact@acme.com",
-      companyLogo: "",
-      items: [
-        { name: "Design work", quantity: 5, amount: 400 },
-        { name: "Landing page implementation", quantity: 6, amount: 600 },
-      ],
-      totalAmount: 1000,
-      notes: "Payment by bank transfer within 15 days. Thank you!"
-    }} />
-  </PDFViewer>
-  )
+    <>
+      <div className="flex justify-end m-4">
+        {" "}
+        <PDFDownloadLink
+          document={<InvoicePDF invoice={invoice} />}
+          fileName={`invoice-${invoice.id}.pdf`}
+          className="bg-purple-400 p-2 rounded-lg font-bold"
+        >
+          {({ loading }) =>
+            loading ? "Preparing PDF..." : "Download Invoice PDF"
+          }
+        </PDFDownloadLink>
+      </div>
+      <PDFViewer width="1100" height="800" showToolbar={false}>
+        <InvoicePDF
+          invoice={{
+            id: "INV-00126",
+            date: "2025-08-26",
+            clientName: "Acme Co.",
+            clientEmail: "contact@acme.com",
+            companyLogo: "",
+            items: [
+              { name: "Design work", quantity: 5, amount: 400.0 },
+              {
+                name: "Landing page implementation",
+                quantity: 6,
+                amount: 600.0,
+              },
+            ],
+            totalAmount: 1000.0034,
+            notes: "Payment by bank transfer within 15 days. Thank you!",
+          }}
+        />
+      </PDFViewer>
+    </>
+  );
 };
 // const root = ReactDOM.createRoot(document.getElementById("root")!);
 // root.render(<InvoicePreview />);

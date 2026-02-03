@@ -1,3 +1,4 @@
+
 import {
   Document,
   Page,
@@ -8,20 +9,13 @@ import {
   Font
 } from "@react-pdf/renderer";
 
-// Optionally register custom fonts
-Font.register({
-  family: "Open Sans",
-  fonts: [
-    { src: "https://fonts.gstatic.com/s/opensans/v29/mem8YaGs126MiZpBA-UFWJ0bbck.woff2" },
-    { src: "https://fonts.gstatic.com/s/opensans/v29/mem5YaGs126MiZpBA-UN7rgOUuhp.woff2", fontWeight: 700 }
-  ]
-});
+// Font registration removed - using default fonts for compatibility
 
 // Invoice PDF styles
 const styles = StyleSheet.create({
   page: {
     padding: 30,
-    fontFamily: "Open Sans",
+    fontFamily: "Helvetica",
     fontSize: 11,
     lineHeight: 1.5,
     color: "#333"
@@ -153,17 +147,17 @@ export default function InvoicePDF({ invoice }: any) {
         </View>
 
         {/* Totals */}
-        <View style={styles.totalRow}>
+        {/* <View style={styles.totalRow}>
           <Text style={styles.totalLabel}>Subtotal:</Text>
           <Text style={styles.totalValue}>₹{invoice.subtotal.toFixed(2)}</Text>
         </View>
         <View style={styles.totalRow}>
           <Text style={styles.totalLabel}>Tax ({invoice.tax}%):</Text>
           <Text style={styles.totalValue}>₹{invoice.taxAmount.toFixed(2)}</Text>
-        </View>
+        </View> */}
         <View style={styles.totalRow}>
           <Text style={styles.totalLabel}>Total:</Text>
-          <Text style={styles.totalValue}>₹{invoice.total.toFixed(2)}</Text>
+          <Text style={styles.totalValue}>₹{invoice.totalAmount.toFixed(2)}</Text>
         </View>
 
       </Page>
