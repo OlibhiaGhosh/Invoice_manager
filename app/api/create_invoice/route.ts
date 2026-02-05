@@ -2,12 +2,11 @@ import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/db";
 import { invoices, saved_details, clients } from "@/db/schema";
 import { z } from "zod";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { getServerSession } from "next-auth/next";
+import { auth } from "@/auth";
 import { eq } from "drizzle-orm";
 
 export async function POST(req: NextRequest, res: NextResponse) {
-  const session = await getServerSession(authOptions);
+  const session = await auth();
   if (session?.user) {
     const body = await req.json();
     const invoiceSchema = z.object({

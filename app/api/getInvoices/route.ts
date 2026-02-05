@@ -1,12 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/db";
 import { invoices, clients } from "@/db/schema";
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { auth } from "@/auth";
 import { eq } from "drizzle-orm";
 
 export async function GET(req: NextRequest, res: NextResponse) {
-  const session = await getServerSession(authOptions);
+  const session = await auth();
   const user_id = session?.user?.id;
   try{
     const userId = Number(user_id);

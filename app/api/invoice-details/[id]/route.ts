@@ -2,13 +2,20 @@ import { db } from "@/db";
 import { NextRequest, NextResponse } from "next/server";
 import { clients, invoices } from "@/db/schema";
 import { eq } from "drizzle-orm";
-import { getServerSession } from "next-auth";
-import { authOptions } from "../../auth/[...nextauth]/route";
+import { auth } from "@/auth";
 
-export async function GET(req: NextRequest, context: { params: { id: string } }) {
-    const { params } = context;
-    const invoice_id = Number(params.id);
-    const session = await getServerSession(authOptions);
+export async function GET(req: NextRequest, context : { params: { id: string } }) {
+    const { id } = await context.params;   // ✅ unwrap promise
+
+  if (!id || isNaN(Number(id))) {
+    return NextResponse.json(
+      { error: "Invalid invoice id" },
+      { status: 400 }
+    );
+  }
+
+  const invoice_id = Number(id);
+    const session = await auth();
     const user_id = session?.user?.id;
 
     try {
