@@ -1,11 +1,10 @@
-import { detectIntent } from "./functions";
+import { Graph } from "@/components/ui/graph";
+import { detectIntent, ListInvoices } from "./functions";
 export async function POST(req: Request) {
   const { message, userId } = await req.json();
 
-  // 1️⃣ Ask AI: what does the user want?
   const intent = await detectIntent(message);
 
-  // 2️⃣ Call backend based on intent
   let result;
 
 //   if (intent.type === "CREATE_INVOICE") {
@@ -15,13 +14,14 @@ export async function POST(req: Request) {
 //   if (intent.type === "ADD_ITEM") {
 //     result = await addInvoiceItem(intent.invoiceId, intent.item);
 //   }
-if (intent.type === "GET_INVOICE_STATUS") {
-
+if (intent.type === "LIST_INVOICES") {
+  result = await ListInvoices(intent.data); // result type: [{invoices:{}, clients:{}}, {}]
 }
 
   // 3️⃣ Return data to frontend / Tambo
   return Response.json({
     intent: intent.type,
     data: result,
+    ui: [Graph]
   });
 }

@@ -43,7 +43,7 @@ export default function InvoicesPage() {
     const fulldata = await result.data;
     console.log("full data: ", fulldata)
     fulldata.map((data: any) => {
-      setInvoices([...invoices,
+      setInvoices(prev => [...prev,
         {
           id: data.invoices.invoice_id,
           number: data.invoices.invoice_id,
@@ -127,7 +127,7 @@ export default function InvoicesPage() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {filtered.map((inv) => (
+                {invoices.map((inv) => (
                   <TableRow key={inv.id}>
                     <TableCell className="font-medium">{inv.number}</TableCell>
                     <TableCell>{inv.client}</TableCell>
