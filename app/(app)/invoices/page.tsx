@@ -36,7 +36,7 @@ type Invoice = {
 export default function InvoicesPage() {
   const [q, setQ] = useState("");
   const [filter, setFilter] = useState<"all" | "paid" | "unpaid" | "overdue">(
-    "all"
+    "all",
   );
   const [invoices, setInvoices] = useState<Invoice[]>([]);
   const [loading, setLoading] = useState(true);
@@ -72,7 +72,7 @@ export default function InvoicesPage() {
 
   const filtered = invoices.filter((inv) => {
     const matches = [inv.number, inv.client].some((s) =>
-      String(s).toLowerCase().includes(String(q).toLowerCase())
+      String(s).toLowerCase().includes(String(q).toLowerCase()),
     );
     const statusOk = filter === "all" ? true : inv.status === filter;
     return matches && statusOk;
@@ -84,8 +84,8 @@ export default function InvoicesPage() {
         status === "paid"
           ? "default"
           : status === "overdue"
-          ? "destructive"
-          : "secondary"
+            ? "destructive"
+            : "secondary"
       }
       className="capitalize"
     >
@@ -149,14 +149,19 @@ export default function InvoicesPage() {
                   </TableRow>
                 ) : filtered.length === 0 ? (
                   <TableRow>
-                    <TableCell colSpan={7} className="text-center py-8 text-muted-foreground">
+                    <TableCell
+                      colSpan={7}
+                      className="text-center py-8 text-muted-foreground"
+                    >
                       No invoices found.
                     </TableCell>
                   </TableRow>
                 ) : (
                   filtered.map((inv) => (
                     <TableRow key={inv.id}>
-                      <TableCell className="font-medium">{inv.number}</TableCell>
+                      <TableCell className="font-medium">
+                        {inv.number}
+                      </TableCell>
                       <TableCell>{inv.client}</TableCell>
                       <TableCell>{inv.date}</TableCell>
                       <TableCell>{inv.due}</TableCell>
@@ -165,9 +170,14 @@ export default function InvoicesPage() {
                       </TableCell>
                       <TableCell className="text-right">{inv.amount}</TableCell>
                       <TableCell>
-                        <div className="flex justify-end">
-                          <Button asChild size="sm" variant="outline">
-                            <Link href={`/invoices/${inv.id}`}>View</Link>
+                        <div className="flex justify-end gap-2">
+                          <Button asChild size="sm" variant="secondary">
+                            <Link href={`/invoices/${inv.id}`}>Edit</Link>
+                          </Button>
+                          <Button asChild size="sm" variant="ghost">
+                            <Link href={`/invoices/${inv.id}/preview`}>
+                              Preview
+                            </Link>
                           </Button>
                         </div>
                       </TableCell>
