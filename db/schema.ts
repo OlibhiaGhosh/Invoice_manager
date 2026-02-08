@@ -1,4 +1,3 @@
-import { not } from "drizzle-orm";
 import { pgTable, serial, varchar, text, integer, timestamp, pgEnum } from "drizzle-orm/pg-core";
 
 export const billing = pgEnum("billing", ["free", "pro", "premium"]);

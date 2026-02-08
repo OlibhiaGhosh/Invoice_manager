@@ -9,6 +9,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
   const user_id = session?.user?.id;
   try{
     const userId = Number(user_id);
+    console.log("Inside api" , userId)
     if (!userId) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }

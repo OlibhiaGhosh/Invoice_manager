@@ -17,7 +17,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     { href: "/billing", label: "Billing", icon: CreditCard },
   ];
   return (
-    <div className="min-h-dvh grid grid-cols-1 md:grid-cols-[240px_1fr]">
+    <div className="min-h-dvh grid grid-cols-1 md:grid-cols-[240px_1fr]" suppressHydrationWarning>
       <aside className="hidden md:block border-r bg-sidebar">
         <div className="p-4">
           <Link href="/" className="block">
