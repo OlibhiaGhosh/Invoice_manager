@@ -63,7 +63,7 @@ export async function get_invoice_graph() {
             }));
 
   return {
-    component: Graph,
+    component: "Graph",
     props: {
       nodes,
       edges,
@@ -75,4 +75,25 @@ export async function get_invoice_graph() {
 
 export async function text_tool() {
   return "I can show your invoices as tables or graphs.";
+}
+
+/* -------------------- CUSTOM CHART TOOL -------------------- */
+
+export async function get_custom_chart_data() {
+  // In a real application, you would fetch this data from a database or API.
+  const sampleData = [
+    { name: "Jan", value: 400 },
+    { name: "Feb", value: 300 },
+    { name: "Mar", value: 600 },
+    { name: "Apr", value: 800 },
+    { name: "May", value: 500 },
+  ];
+
+  return {
+    component: "CustomChart",
+    props: {
+      data: sampleData,
+      title: "Sample Custom Chart",
+    },
+  };
 }
