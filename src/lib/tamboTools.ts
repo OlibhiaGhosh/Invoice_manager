@@ -1,14 +1,8 @@
 import type { TamboTool } from "@tambo-ai/react";
-import { get_all_invoices, get_invoice_graph, text_tool } from "./tamboFunctions";
+import { get_all_invoices, get_invoice_graph, text_tool, get_custom_chart_data } from "./tamboFunctions";
 
-/* ---------------------------------------------
-   TOOLS
----------------------------------------------- */
 
 export const invoiceTools: TamboTool<any, any, []>[] = [
-  /* =========================================================
-      TABLE TOOL → Show All Invoices
-  ========================================================= */
 
   {
     name: "get_all_invoices",
@@ -44,9 +38,6 @@ export const invoiceTools: TamboTool<any, any, []>[] = [
     tool: get_all_invoices,
   },
 
-  /* =========================================================
-      GRAPH TOOL → Invoice Relationships
-  ========================================================= */
 
   {
     name: "invoice_graph",
@@ -96,10 +87,6 @@ export const invoiceTools: TamboTool<any, any, []>[] = [
     tool: get_invoice_graph,
   },
 
-  /* =========================================================
-      TEXT TOOL
-  ========================================================= */
-
   {
     name: "text",
     description: "Return plain text",
@@ -114,5 +101,40 @@ export const invoiceTools: TamboTool<any, any, []>[] = [
     } as const,
 
     tool: text_tool,
+  },
+
+  {
+    name: "get_custom_chart",
+    description: "Shows a custom chart with sample data.",
+    inputSchema: {
+      type: "object",
+      properties: {},
+    } as const,
+    outputSchema: {
+      type: "object",
+      properties: {
+        component: { type: "string" },
+        props: {
+          type: "object",
+          properties: {
+            data: {
+              type: "array",
+              items: {
+                type: "object",
+                properties: {
+                  name: { type: "string" },
+                  value: { type: "number" },
+                },
+                required: ["name", "value"],
+              },
+            },
+            title: { type: "string" },
+          },
+          required: ["data", "title"],
+        },
+      },
+      required: ["component", "props"],
+    } as const,
+    tool: get_custom_chart_data,
   },
 ];

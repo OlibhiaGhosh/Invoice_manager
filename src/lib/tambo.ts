@@ -12,6 +12,8 @@
  */
 
 import type { TamboComponent } from "@tambo-ai/react";
+import { Graph, graphSchema } from "@/components/ui/graph";
+import { CustomChart, customChartSchema } from "@/components/ui/custom-chart";
 
 
 /**
@@ -40,7 +42,20 @@ import type { TamboComponent } from "@tambo-ai/react";
  * ];
  * ```
  */
-export const components: TamboComponent[] = [];
+export const components: TamboComponent[] = [
+    {
+        name: "Graph",
+        description: "Renders a graph with the provided data",
+        component: Graph,
+        propsSchema: graphSchema,
+    },
+    {
+        name: "CustomChart",
+        description: "Renders a custom chart with the provided data",
+        component: CustomChart,
+        propsSchema: customChartSchema,
+    }
+];
 
 // Import your custom components that utilize the Tambo SDK
 // import { CustomChart } from "../components/tambo/custom-chart";

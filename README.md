@@ -1,0 +1,133 @@
+# Invoice Manager
+
+Invoice Manager is a full-stack web application designed to streamline the process of creating, managing, and tracking professional invoices. It provides a user-friendly interface for freelancers and small businesses to handle their billing efficiently. The application features secure user authentication, client management, and dynamic invoice generation with PDF export options.
+
+## ✨ Features
+
+-   **Secure User Authentication**: Robust user sign-up and login system powered by NextAuth.js, supporting both credential-based and OAuth providers.
+-   **Dashboard Analytics**: An AI integrated dashboard that provides an at-a-glance overview of income, invoice statuses, and recent activity based on user request. (Tambo AI used)
+-   **Client Management**: Easily add, view, and manage a list of clients for quick selection when creating new invoices.
+-   **Dynamic Invoice Creation**: A comprehensive form to create detailed invoices, including line items, quantities, prices, and notes.
+-   **PDF Generation & Download**: Generate and download professional-grade PDF versions of invoices for sending to clients.
+-   **Invoice Tracking**: View a list of all created invoices with their status (e.g., Paid, Pending, Overdue).
+-   **Responsive UI**: A clean and modern user interface built with Next.js, Tailwind CSS, and Shadcn/UI, ensuring a seamless experience on all devices. (Mobile view under work)
+-   **Subscription Tiers**: A built-in billing system (`free`, `pro`, `premium`) to manage user access and features. (To be implemented)
+
+## 🛠️ Tech Stack
+
+-   **Framework**: [Next.js](https://nextjs.org/)
+-   **Language**: [TypeScript](https://www.typescriptlang.org/)
+-   **Authentication**: [NextAuth.js](https://next-auth.js.org/)
+-   **Database ORM**: [Drizzle ORM](https://orm.drizzle.team/)
+-   **Database**: [PostgreSQL](https://www.postgresql.org/) (powered by [Neon](https://neon.tech/))
+-   **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+-   **UI Components**: [Shadcn/UI](https://ui.shadcn.com/)
+-   **Form Management**: [React Hook Form](https://react-hook-form.com/) & [Zod](https://zod.dev/)
+-   **PDF Generation**: [@react-pdf/renderer](https://react-pdf.org/)
+-   **Analytics & Charts**: [TamboAI](https://tambo.co/)
+
+## 🚀 Getting Started
+
+Follow these instructions to get a copy of the project up and running on your local machine for development and testing purposes.
+
+### Prerequisites
+
+-   Node.js (v18 or later recommended)
+-   `pnpm` (or `npm`/`yarn`)
+-   A PostgreSQL database. You can get a free one from [Neon](https://neon.tech/).
+
+### Setup
+
+1.  **Clone the repository:**
+    ```bash
+    git clone https://github.com/your-username/invoice-manager.git
+    cd invoice-manager
+    ```
+
+2.  **Install dependencies:**
+    ```bash
+    pnpm install
+    ```
+
+3.  **Set up environment variables:**
+    Create a `.env` file in the root of the project and add the following variables. Replace the placeholder values with your actual credentials.
+
+    ```env
+    # Neon PostgreSQL connection string
+    DATABASE_URL="postgresql://USERNAME:PASSWORD@HOST:PORT/DATABASE_NAME"
+
+    # NextAuth.js secret and URL
+    NEXTAUTH_SECRET="your_super_secret_nextauth_key"
+    NEXTAUTH_URL="http://localhost:3000"
+
+    # Optional: Google OAuth credentials
+    # GOOGLE_CLIENT_ID="your_google_client_id"
+    # GOOGLE_CLIENT_SECRET="your_google_client_secret"
+    ```
+
+4.  **Run database migrations:**
+    This will sync your database schema with the definitions in `db/schema.ts`.
+
+    ```bash
+    pnpm drizzle-kit push
+    ```
+
+5.  **Start the development server:**
+    ```bash
+    pnpm dev
+    ```
+
+The application will be available at [http://localhost:3000](http://localhost:3000).
+
+## 📜 Available Scripts
+
+-   `pnpm dev`: Starts the development server.
+-   `pnpm build`: Builds the application for production.
+-   `pnpm start`: Starts the production server.
+-   `pnpm lint`: Lints the source code using Next.js's built-in ESLint configuration.
+
+## 📁 Project Structure
+
+```
+Invoice_manager/
+├── app/
+│   ├── (app)/                # Protected application routes (dashboard, invoices)
+│   ├── (auth)/               # Authentication routes (signin, signup)
+│   ├── api/                  # API route handlers
+│   ├── components/           # Global layout components
+│   └── layout.tsx            # Root layout
+├── components/
+│   ├── dashboard/            # Dashboard-specific components (charts, cards)
+│   ├── invoices/             # Invoice-related components (form, PDF, preview)
+│   └── ui/                   # Reusable UI components from Shadcn/UI
+├── db/
+│   ├── schema.ts             # Drizzle ORM database schema definitions
+│   └── index.ts              # Drizzle client instance
+├── drizzle/
+│   └── *.sql                 # SQL migration files generated by Drizzle Kit
+├── public/
+│   └── *                     # Static assets (images, logos)
+├── drizzle.config.ts         # Drizzle Kit configuration
+├── next.config.mjs           # Next.js configuration
+└── package.json              # Project dependencies and scripts
+```
+
+## 🗄️ Database Schema
+
+The database schema is defined in `db/schema.ts` and consists of four main tables:
+
+-   **`users`**: Stores user information, including authentication details, company name, and subscription tier (`billing`).
+-   **`clients`**: Stores client details, linked to a user. Each user can have multiple clients.
+-   **`invoices`**: Contains all invoice data, including issue/due dates, line items (stored as a JSON string), total amount, and status. It is linked to both a `user` and a `client`.
+
+Relationships are configured with `onDelete: "cascade"` to ensure data integrity when a user, client, or invoice is deleted.
+
+## 📡 API Endpoints
+
+All API routes are defined in the `app/api/` directory.
+
+-   **`/api/auth/...`**: Handled by NextAuth.js for user authentication (sign-up, sign-in, sign-out, session management).
+-   **`/api/auth/signup`**: Custom route for user registration.
+-   **`/api/create_invoice`**: (Protected) Handles the creation of a new invoice.
+-   **`/api/getInvoices`**: (Protected) Retrieves a list of invoices for the authenticated user.
+-   **`/api/invoice-details/[id]`**: (Protected) Fetches the details for a specific invoice by its ID.

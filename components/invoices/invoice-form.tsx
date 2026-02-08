@@ -154,6 +154,7 @@ export function  InvoiceForm({ mode }: Props) {
       setError("There was an error creating the invoice. Please try again.");
     } finally {
       setSubmitting(false);
+      router.push("/invoices");
     }
   };
   if (loading) {
